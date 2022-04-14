@@ -1,0 +1,145 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a server that uses Google's autocomplete system to provide suggestions for a given keyword",
+        "title": "Keyword Suggestion API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/get_suggestions": {
+            "get": {
+                "description": "Takes the keyword and optional parameters then returns suggestions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Suggester"
+                ],
+                "summary": "Main function of the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Keyword to search",
+                        "name": "keyword",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Host language code to restrict results",
+                        "name": "hl",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Two-letter country code to restrict results",
+                        "name": "gl",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Suggestion depth",
+                        "name": "depth",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Check database for cached results",
+                        "name": "load",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Save results to the database",
+                        "name": "save",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Proxy to use for request",
+                        "name": "proxy",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Suggestions returned",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.packedSuggestion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameter",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not defined error",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    },
+                    "500": {
+                        "description": "Api function failure",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    },
+                    "503": {
+                        "description": "HTTP call failed",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.apiError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Error message..."
+                },
+                "status_code": {
+                    "type": "integer",
+                    "example": 999
+                }
+            }
+        },
+        "api.packedSuggestion": {
+            "type": "object",
+            "properties": {
+                "base_keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "example"
+                    ]
+                },
+                "level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "suggested_keyword": {
+                    "type": "string",
+                    "example": "example pricing"
+                }
+            }
+        }
+    }
+}

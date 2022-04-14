@@ -1,0 +1,16 @@
+youtube.com
+google.com
+microsoft.com
+pinterest.com
+wordpress.org
+wikipedia.org
+medium.com
+chron.com
+apple.com
+ca.gov
+stackoverflow.com
+quora.com
+amazon.com
+facebook.com
+reddit.com
+mozilla.org

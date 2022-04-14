@@ -1,0 +1,65 @@
+basePath: /
+definitions:
+  api.apiError:
+    properties:
+      message:
+        example: Error message...
+        type: string
+      status_code:
+        example: 999
+        type: integer
+    type: object
+  api.scoredURLs:
+    properties:
+      place:
+        type: integer
+      score:
+        type: integer
+      url_domain:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a server that uses SERP database and returns possible competitors
+    for a keyword
+  title: Competitor Finder API
+  version: "1.0"
+paths:
+  /get_competitors:
+    get:
+      consumes:
+      - application/json
+      description: Takes the keyword and optional parameters then returns results
+      parameters:
+      - description: Keyword to check for
+        in: query
+        name: keyword
+        required: true
+        type: string
+      - description: Amount of desired results
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Results returned
+          schema:
+            items:
+              $ref: '#/definitions/api.scoredURLs'
+            type: array
+        "404":
+          description: Not defined error
+          schema:
+            $ref: '#/definitions/api.apiError'
+        "500":
+          description: Api function failure
+          schema:
+            $ref: '#/definitions/api.apiError'
+      summary: Main function of the API
+      tags:
+      - Getter
+swagger: "2.0"

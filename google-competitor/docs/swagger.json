@@ -1,0 +1,96 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a server that uses SERP database and returns possible competitors for a keyword",
+        "title": "Competitor Finder API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/get_competitors": {
+            "get": {
+                "description": "Takes the keyword and optional parameters then returns results",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Getter"
+                ],
+                "summary": "Main function of the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Keyword to check for",
+                        "name": "keyword",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Amount of desired results",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Results returned",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/api.scoredURLs"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not defined error",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    },
+                    "500": {
+                        "description": "Api function failure",
+                        "schema": {
+                            "$ref": "#/definitions/api.apiError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.apiError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Error message..."
+                },
+                "status_code": {
+                    "type": "integer",
+                    "example": 999
+                }
+            }
+        },
+        "api.scoredURLs": {
+            "type": "object",
+            "properties": {
+                "place": {
+                    "type": "integer"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "url_domain": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

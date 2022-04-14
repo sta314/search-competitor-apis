@@ -1,0 +1,98 @@
+basePath: /
+definitions:
+  api.apiError:
+    properties:
+      message:
+        example: Error message...
+        type: string
+      status_code:
+        example: 999
+        type: integer
+    type: object
+  api.packedSuggestion:
+    properties:
+      base_keywords:
+        example:
+        - example
+        items:
+          type: string
+        type: array
+      level:
+        example: 1
+        type: integer
+      suggested_keyword:
+        example: example pricing
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a server that uses Google's autocomplete system to provide
+    suggestions for a given keyword
+  title: Keyword Suggestion API
+  version: "1.0"
+paths:
+  /get_suggestions:
+    get:
+      consumes:
+      - application/json
+      description: Takes the keyword and optional parameters then returns suggestions
+      parameters:
+      - description: Keyword to search
+        in: query
+        name: keyword
+        required: true
+        type: string
+      - description: Host language code to restrict results
+        in: query
+        name: hl
+        type: string
+      - description: Two-letter country code to restrict results
+        in: query
+        name: gl
+        type: string
+      - description: Suggestion depth
+        in: query
+        name: depth
+        type: integer
+      - description: Check database for cached results
+        in: query
+        name: load
+        type: boolean
+      - description: Save results to the database
+        in: query
+        name: save
+        type: boolean
+      - description: Proxy to use for request
+        in: query
+        name: proxy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Suggestions returned
+          schema:
+            items:
+              $ref: '#/definitions/api.packedSuggestion'
+            type: array
+        "400":
+          description: Invalid parameter
+          schema:
+            $ref: '#/definitions/api.apiError'
+        "404":
+          description: Not defined error
+          schema:
+            $ref: '#/definitions/api.apiError'
+        "500":
+          description: Api function failure
+          schema:
+            $ref: '#/definitions/api.apiError'
+        "503":
+          description: HTTP call failed
+          schema:
+            $ref: '#/definitions/api.apiError'
+      summary: Main function of the API
+      tags:
+      - Suggester
+swagger: "2.0"
