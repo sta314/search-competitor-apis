@@ -43,4 +43,6 @@ Response is *json* containing all results as an array.
 
 ### Example data
 
-Previously executed query using SERP DB filled with [this keyword list](/docs/data/keyword_list.csv) and **keyword = example** can be reached from [here](/docs/data/competitor)
+~~Previously executed query using SERP DB filled with this keyword list and **keyword = example** can be reached from here~~
+
+Collected datasets are omitted.

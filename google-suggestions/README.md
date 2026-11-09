@@ -49,4 +49,6 @@ google_suggestions_meta
 
 ### Example data
 
-Previously collected data using [this keyword list](/docs/data/keyword_list.csv) can be reached from [here](/docs/data/suggestions)
+~~Previously collected data using this keyword list can be reached from here~~
+
+Collected datasets are omitted.
